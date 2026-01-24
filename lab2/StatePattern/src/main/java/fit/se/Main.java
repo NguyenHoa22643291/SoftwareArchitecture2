@@ -1,5 +1,9 @@
 package fit.se;
 
+import fit.se.DecoratorPattern.CreditCardPayment;
+import fit.se.DecoratorPattern.DiscountDecorator;
+import fit.se.DecoratorPattern.Payment;
+import fit.se.DecoratorPattern.ProcessingFeeDecorator;
 import fit.se.StrategyPattern.ConsumptionTax;
 import fit.se.StrategyPattern.LuxuryTax;
 import fit.se.StrategyPattern.Product;
@@ -20,18 +24,31 @@ public class Main {
 
         //Strategy ap dung cho bai thue
         // 1. Sản phẩm áp dụng thuế VAT
-        Product laptop = new Product("Laptop", 1000, new VATTax());
-        laptop.showInfo();
-        System.out.println("-----------------");
+//        Product laptop = new Product("Laptop", 1000, new VATTax());
+//        laptop.showInfo();
+//        System.out.println("-----------------");
+//
+//        // 2. Sản phẩm áp dụng thuế Xa xỉ
+//        Product xeHoi = new Product("Xe hơi", 50000, new LuxuryTax());
+//        xeHoi.showInfo();
+//        System.out.println("-----------------");
+//
+//        // 3. Thay đổi chiến lược thuế linh hoạt
+//        System.out.println("Thay đổi Laptop từ thuế VAT sang thuế Tiêu thụ:");
+//        laptop.setTaxStrategy(new ConsumptionTax());
+//        laptop.showInfo();
 
-        // 2. Sản phẩm áp dụng thuế Xa xỉ
-        Product xeHoi = new Product("Xe hơi", 50000, new LuxuryTax());
-        xeHoi.showInfo();
-        System.out.println("-----------------");
+        //Decorator ap dung cho bai tinh nang bo sung - phi xu ly, ma giam gia
 
-        // 3. Thay đổi chiến lược thuế linh hoạt
-        System.out.println("Thay đổi Laptop từ thuế VAT sang thuế Tiêu thụ:");
-        laptop.setTaxStrategy(new ConsumptionTax());
-        laptop.showInfo();
+        // 1. Thanh toán gốc bằng Thẻ tín dụng 100$
+        Payment payment = new CreditCardPayment(100.0);
+
+        // 2. Thêm phí xử lý
+        payment = new ProcessingFeeDecorator(payment);
+        // 3. Thêm tiếp mã giảm giá
+        payment = new DiscountDecorator(payment);
+
+        System.out.println("Chi tiết: " + payment.getDescription());
+        System.out.println("Tổng tiền cuối cùng: " + payment.getAmount() + "$");
     }
 }
