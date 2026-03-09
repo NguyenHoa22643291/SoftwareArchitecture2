@@ -1,4 +1,6 @@
 package fit.se;
 
-public class FileSystemNote {
+//mot folder chua nhieu file
+public interface FileSystemNote {
+    void showDetails(String indent);
 }

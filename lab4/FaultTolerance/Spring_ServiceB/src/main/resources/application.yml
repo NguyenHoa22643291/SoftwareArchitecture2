@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: Spring_ServiceB
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      myService:
+        registerHealthIndicator: true
+        slidingWindowSize: 10
+        permittedNumberOfCallsInHalfOpenState: 3
+        slidingWindowType: COUNT_BASED
+        minimumNumberOfCalls: 5
+        waitDurationInOpenState: 5s
+        failureRateThreshold: 50
+  retry:
+    instances:
+      myService:
+        maxAttempts: 3
+        waitDuration: 2s
