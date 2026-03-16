@@ -1,0 +1,29 @@
+services:
+  # Dịch vụ 1: Cơ sở dữ liệu MySQL
+  db:
+    image: mysql:8.0
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password123
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: hoa_user
+      MYSQL_PASSWORD: hoa_password
+
+  # Dịch vụ 2: Mã nguồn WordPress
+  wordpress:
+    depends_on:
+      - db
+    image: wordpress:latest
+    ports:
+      - "8080:80"
+    restart: always
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: hoa_user
+      WORDPRESS_DB_PASSWORD: hoa_password
+      WORDPRESS_DB_NAME: wordpress
+
+volumes:
+  db_data:
