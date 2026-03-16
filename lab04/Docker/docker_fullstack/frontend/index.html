@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head><title>Fullstack App</title></head>
+<body>
+    <h1>hệ thống Fullstack</h1>
+    <button onclick="fetchData()">Lấy dữ liệu từ Back-end</button>
+    <p id="result"></p>
+
+    <script>
+        async function fetchData() {
+            // Gọi qua lá chắn Nginx (cổng 80)
+            const res = await fetch('/api/data');
+            const data = await res.json();
+            document.getElementById('result').innerText = data.message;
+        }
+    </script>
+</body>
+</html>
